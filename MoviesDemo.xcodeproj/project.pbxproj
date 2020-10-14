@@ -27,6 +27,10 @@
 		F899A52B2537105100234016 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F899A52A2537105100234016 /* Helper.swift */; };
 		F899A52D253713D200234016 /* MovieDetailVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F899A52C253713D200234016 /* MovieDetailVideoModel.swift */; };
 		F899A530253720C000234016 /* YoutubePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F899A52F253720BF00234016 /* YoutubePlayer.swift */; };
+		F899A53525372D6400234016 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F899A53425372D6400234016 /* SearchController.swift */; };
+		F899A53825373AA300234016 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F899A53725373AA300234016 /* SearchViewModel.swift */; };
+		F899A53C25373ACE00234016 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F899A53B25373ACE00234016 /* SearchModel.swift */; };
+		F899A53E253740B100234016 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F899A53D253740B100234016 /* SearchView.swift */; };
 		F8E470A42534A06B005D6214 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E470A32534A06B005D6214 /* AppDelegate.swift */; };
 		F8E470A62534A06B005D6214 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E470A52534A06B005D6214 /* SceneDelegate.swift */; };
 		F8E470A82534A06B005D6214 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E470A72534A06B005D6214 /* HomeViewController.swift */; };
@@ -84,6 +88,10 @@
 		F899A52A2537105100234016 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		F899A52C253713D200234016 /* MovieDetailVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailVideoModel.swift; sourceTree = "<group>"; };
 		F899A52F253720BF00234016 /* YoutubePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayer.swift; sourceTree = "<group>"; };
+		F899A53425372D6400234016 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		F899A53725373AA300234016 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		F899A53B25373ACE00234016 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
+		F899A53D253740B100234016 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		F8E470A02534A06B005D6214 /* MoviesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoviesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8E470A32534A06B005D6214 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8E470A52534A06B005D6214 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -202,11 +210,38 @@
 			path = MoviewDetailModel;
 			sourceTree = "<group>";
 		};
-		F899A52E253720AF00234016 /* New Group */ = {
+		F899A53325372D4D00234016 /* SearchController */ = {
+			isa = PBXGroup;
+			children = (
+				F899A53A25373ABC00234016 /* SearchModel */,
+				F899A53925373AB100234016 /* SearchView */,
+				F899A53625373A8C00234016 /* SearchViewModel */,
+				F899A53425372D6400234016 /* SearchController.swift */,
+			);
+			path = SearchController;
+			sourceTree = "<group>";
+		};
+		F899A53625373A8C00234016 /* SearchViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F899A53725373AA300234016 /* SearchViewModel.swift */,
+			);
+			path = SearchViewModel;
+			sourceTree = "<group>";
+		};
+		F899A53925373AB100234016 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = "New Group";
+			path = SearchView;
+			sourceTree = "<group>";
+		};
+		F899A53A25373ABC00234016 /* SearchModel */ = {
+			isa = PBXGroup;
+			children = (
+				F899A53B25373ACE00234016 /* SearchModel.swift */,
+			);
+			path = SearchModel;
 			sourceTree = "<group>";
 		};
 		F8E470972534A06B005D6214 = {
@@ -234,6 +269,7 @@
 		F8E470A22534A06B005D6214 /* MoviesDemo */ = {
 			isa = PBXGroup;
 			children = (
+				F899A53325372D4D00234016 /* SearchController */,
 				F899A5122536D87A00234016 /* MoviewDetailController */,
 				F899A5062534B17B00234016 /* Extensions */,
 				F8E470D92534A2C4005D6214 /* NetworkManager */,
@@ -280,7 +316,6 @@
 		F8E470D42534A0C0005D6214 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				F899A52E253720AF00234016 /* New Group */,
 				F8E470DE2534AA48005D6214 /* Constant.swift */,
 				F899A5102536C50C00234016 /* ImageLoader.swift */,
 				F899A5152536D99600234016 /* NavigationHelper.swift */,
@@ -311,6 +346,7 @@
 			isa = PBXGroup;
 			children = (
 				F899A50B2534C2AC00234016 /* HomeMovieCollectionCell.swift */,
+				F899A53D253740B100234016 /* SearchView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -584,13 +620,17 @@
 				F899A5232536E7DF00234016 /* CastCrewTableViewCell.swift in Sources */,
 				F899A5082534B19900234016 /* Extensions.swift in Sources */,
 				F899A5162536D99600234016 /* NavigationHelper.swift in Sources */,
+				F899A53C25373ACE00234016 /* SearchModel.swift in Sources */,
 				F899A5272536F32A00234016 /* CastCrewCollectionViewCell.swift in Sources */,
 				F899A5052534AEE300234016 /* HomeModel.swift in Sources */,
 				F899A5292537062600234016 /* MovieCastCrewModel.swift in Sources */,
 				F899A51B2536DED800234016 /* MoviewDetailModel.swift in Sources */,
 				F8E470A62534A06B005D6214 /* SceneDelegate.swift in Sources */,
+				F899A53E253740B100234016 /* SearchView.swift in Sources */,
 				F899A5142536D89900234016 /* MoviewDetailController.swift in Sources */,
+				F899A53525372D6400234016 /* SearchController.swift in Sources */,
 				F8E470DB2534A979005D6214 /* RequestHelper.swift in Sources */,
+				F899A53825373AA300234016 /* SearchViewModel.swift in Sources */,
 				F899A51D2536DF1300234016 /* MovieDetailViewModel.swift in Sources */,
 				F8E470DF2534AA48005D6214 /* Constant.swift in Sources */,
 				F899A52D253713D200234016 /* MovieDetailVideoModel.swift in Sources */,

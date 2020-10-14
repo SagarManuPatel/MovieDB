@@ -132,6 +132,7 @@ extension MoviewDetailController : MovieDetailControllerDelegate {
         self.moviewDetailModel = response
         
         DispatchQueue.main.async {
+            self.navigationItem.title = self.moviewDetailModel?.original_title
             self.reloadSectionInTable(.video)
             self.reloadSectionInTable(.detail)
         }

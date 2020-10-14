@@ -43,10 +43,17 @@ class DetailTableViewCell : BaseTableViewCell {
         return lbl
     }()
     
+    let sepratorView : UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 0.9440282534)
+        return view
+    }()
+    
     override func addCustomViews() {
         addSubview(durationAndgenresLabel)
         addSubview(descriptionLabel)
-        
+        addSubview(sepratorView)
         
         durationAndgenresLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
         durationAndgenresLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
@@ -56,5 +63,10 @@ class DetailTableViewCell : BaseTableViewCell {
         descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor , constant: -16).isActive = true
         descriptionLabel.topAnchor.constraint(equalTo: durationAndgenresLabel.bottomAnchor , constant: 8).isActive = true
         descriptionLabel.bottomAnchor.constraint(equalTo: bottomAnchor , constant: -8).isActive = true
+        
+        sepratorView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        sepratorView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        sepratorView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        sepratorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
     }
 }

@@ -17,4 +17,9 @@ class NavigationHelper : NSObject {
         moviewDetailController.moviewId = moviewId
         controller.navigationController?.pushViewController(moviewDetailController, animated: true)
     }
+    
+    class func openSearchController(controller : UIViewController) {
+        let searchController = SearchController()
+        controller.navigationController?.pushViewController(searchController, animated: true)
+    }
 }

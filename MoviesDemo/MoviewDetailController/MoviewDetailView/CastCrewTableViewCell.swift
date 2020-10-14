@@ -47,9 +47,17 @@ class CastCrewTableViewCell : BaseTableViewCell {
         return cv
     }()
     
+    let sepratorView : UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 0.9440282534)
+        return view
+    }()
+    
     override func addCustomViews() {
         addSubview(titleLabel)
         addSubview(collectionView)
+        addSubview(sepratorView)
         
         collectionView.register(CastCrewCollectionViewCell.self, forCellWithReuseIdentifier: Constant.CellIdentifiers.castCrewCollectionCell)
         
@@ -61,6 +69,11 @@ class CastCrewTableViewCell : BaseTableViewCell {
         collectionView.trailingAnchor.constraint(equalTo: trailingAnchor ,constant: -8).isActive = true
         collectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         collectionView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor , constant: -8).isActive = true
+        
+        sepratorView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        sepratorView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        sepratorView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        sepratorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
     }
 }
 
