@@ -18,10 +18,12 @@ class CastCrewTableViewCell : BaseTableViewCell {
     
     var isCast : Bool? {
         didSet {
-            if isCast ?? false{
-                titleLabel.text = "Cast"
-            }else{
-                titleLabel.text = "Crew"
+            if castCrewModel?.count ?? 0 > 0{
+                if isCast ?? false{
+                    titleLabel.text = "Cast"
+                }else{
+                    titleLabel.text = "Crew"
+                }
             }
         }
     }

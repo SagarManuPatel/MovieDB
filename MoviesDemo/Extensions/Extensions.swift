@@ -59,3 +59,9 @@ extension UIViewController {
         }
     }
 }
+
+extension String{
+    func trimTrailingWhitespaces() -> String {
+        return self.replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression)
+    }
+}

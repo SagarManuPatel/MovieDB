@@ -98,14 +98,14 @@ extension MoviewDetailController : UITableViewDelegate , UITableViewDataSource{
             return cell
         case.crew:
             let cell = tableView.dequeueReusableCell(withIdentifier: Constant.CellIdentifiers.castCell, for: indexPath) as! CastCrewTableViewCell
-            cell.isCast = false
             cell.castCrewModel = castCrewModel?.crew
+            cell.isCast = false
             cell.selectionStyle = .none
             return cell
         case .cast:
             let cell = tableView.dequeueReusableCell(withIdentifier: Constant.CellIdentifiers.castCell, for: indexPath) as! CastCrewTableViewCell
-            cell.isCast = true
             cell.castCrewModel = castCrewModel?.cast
+            cell.isCast = true
             cell.selectionStyle = .none
             return cell
         }

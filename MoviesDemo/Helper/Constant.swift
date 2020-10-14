@@ -47,5 +47,6 @@ class Constant: NSObject {
         static let detailCell = "DetailTableViewCell"
         static let castCell = "CastTableViewCell"
         static let castCrewCollectionCell = "CastCrewCollectionViewCell"
+        static let searchCollectionCell = "SearchCollectionCell"
     }
 }

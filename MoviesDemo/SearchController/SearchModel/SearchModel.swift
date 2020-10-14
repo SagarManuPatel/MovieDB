@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+struct SearchModel : Codable {
+    var total_results : Int?
+    var total_pages : Int?
+    var results : [ResultModel]?
+}
