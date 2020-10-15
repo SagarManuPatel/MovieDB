@@ -174,13 +174,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F86764A32538104200EB7AA9 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		F899A5062534B17B00234016 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,7 +290,6 @@
 				F8E470D32534A099005D6214 /* HomeController */,
 				F899A5122536D87A00234016 /* MoviewDetailController */,
 				F899A53325372D4D00234016 /* SearchController */,
-				F86764A32538104200EB7AA9 /* Controllers */,
 				F899A5062534B17B00234016 /* Extensions */,
 				F8E470D92534A2C4005D6214 /* NetworkManager */,
 				F8E470D52534A0C7005D6214 /* AppDelegate */,
