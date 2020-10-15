@@ -21,4 +21,5 @@ SearchController -> It will make API call to fetch data of user Search.
 - added Throttel of 0.5 sec so that it will not make api call everytime when user enter somethig.
 - last 5 searched Movies will be showed under Recent Search.
 - On Click of result it will go to Detail Page.
+- added Pagination
 
