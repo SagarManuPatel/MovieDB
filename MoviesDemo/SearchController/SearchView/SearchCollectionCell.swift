@@ -25,8 +25,9 @@ class SearchCollectionCell : BaseCollectionCell {
     let imageView : ImageLoader = {
         let iv = ImageLoader()
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.contentMode = .scaleAspectFit
-        iv.backgroundColor = .lightGray
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 0.6263377568)
         return iv
     }()
     
@@ -57,8 +58,8 @@ class SearchCollectionCell : BaseCollectionCell {
         
         imageView.leadingAnchor.constraint(equalTo: leadingAnchor , constant: 16).isActive = true
         imageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 44).isActive = true
         
         moviewNameLabel.topAnchor.constraint(equalTo: imageView.topAnchor).isActive = true
         moviewNameLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor , constant: 8).isActive = true

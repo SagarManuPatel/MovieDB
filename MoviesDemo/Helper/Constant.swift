@@ -48,5 +48,10 @@ class Constant: NSObject {
         static let castCell = "CastTableViewCell"
         static let castCrewCollectionCell = "CastCrewCollectionViewCell"
         static let searchCollectionCell = "SearchCollectionCell"
+        static let recentSearchCollectionCell = "RecentSerachCollectionCell"
+    }
+    
+    struct UserDefaultKeys {
+        static let latestSearch = "latestSearch"
     }
 }
