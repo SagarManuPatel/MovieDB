@@ -52,4 +52,11 @@ class RequestsHelper: NSObject {
         }
         return NSMutableURLRequest()
     }
+
+    class func fetchMoviewRecommendation(movieId : Int) -> NSMutableURLRequest {
+        let moviewData = URL(string: "\(Constant.URL.baseURL)movie/\(movieId)/recommendations")
+        var movieRequest = NSMutableURLRequest(url: moviewData! as URL)
+        addRequestProperties(&movieRequest, ofType: Constant.RequestMethodTypes.GET)
+        return movieRequest
+    }
 }

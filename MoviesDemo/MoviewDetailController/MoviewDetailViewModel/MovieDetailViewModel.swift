@@ -15,6 +15,7 @@ protocol MovieDetailControllerDelegate : class{
     func handleVideoFailureResponse()
     func handleCastCrewDetailResponse(response : MoviewCastCrewModel)
     func handleCastCrewFailureResponse()
+    func handleRecomandationSuccess(response : HomeModel)
 }
 
 class MovieDetailViewModel {
@@ -62,6 +63,20 @@ class MovieDetailViewModel {
                 }catch let jsonError {
                     print(jsonError)
                 }
+            }
+        }
+    }
+    
+    func fetchRecommendedMoviews(moiveId : Int) {
+        APIManager.sharedInstance.makeApiCallToFetchData(request: RequestsHelper.fetchMoviewRecommendation(movieId: moiveId)) { (data , error) in
+            do {
+                if let dataReponse = data {
+                    let response = try JSONDecoder().decode(HomeModel.self, from: dataReponse)
+                    self.delegate?.handleRecomandationSuccess(response: response)
+                    print(response)
+                }
+            }catch let jsonError {
+                print(jsonError)
             }
         }
     }

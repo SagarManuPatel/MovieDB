@@ -9,7 +9,7 @@
 import Foundation
 
 enum DetailSections : Int{
-    case video , detail , cast , crew
+    case video , detail , cast , crew , recommendations
 }
 
 class Constant: NSObject {
@@ -49,6 +49,8 @@ class Constant: NSObject {
         static let castCrewCollectionCell = "CastCrewCollectionViewCell"
         static let searchCollectionCell = "SearchCollectionCell"
         static let recentSearchCollectionCell = "RecentSerachCollectionCell"
+        static let recommendationCell = "DetailRecommendationTableViewCell"
+        static let recommendationCollectionCell = "RecommendationCollectionCell"
     }
     
     struct UserDefaultKeys {

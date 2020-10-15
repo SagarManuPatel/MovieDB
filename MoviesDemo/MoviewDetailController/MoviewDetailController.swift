@@ -12,13 +12,18 @@ protocol MoviewDetailControllerPlayTrailorDelegate : class{
     func playTrailor(id : String)
 }
 
+protocol MovieDetailControllerRecommandationDelegate : class {
+    func openMovieDetail(movieId : Int)
+}
+
 class MoviewDetailController : UIViewController {
     
-    let sections : [DetailSections] = [.video , .detail , .cast , .crew]
+    let sections : [DetailSections] = [.video , .detail , .cast , .crew , .recommendations]
     
     var moviewDetailModel : MoviewDetailModel?
     var castCrewModel : MoviewCastCrewModel?
     var movieVideoModel : MovieDetailVideoModel?
+    var recommandedResponse : [ResultModel]?
     let viewModel = MovieDetailViewModel()
     
     lazy var tableview : UITableView = {
@@ -46,10 +51,15 @@ class MoviewDetailController : UIViewController {
         view.backgroundColor = .white
         setupTableView()
         viewModel.delegate = self
+        makeAPICall()
+    }
+    
+    private func makeAPICall() {
         self.loader.startAnimating()
         viewModel.getMovieDetail(moiveId: moviewId ?? 0)
         viewModel.getCastAndCrue(moiveId: moviewId ?? 0)
         viewModel.getTrailerVideo(moiveId: moviewId ?? 0)
+        viewModel.fetchRecommendedMoviews(moiveId: moviewId ?? 0)
     }
     
     private func setupTableView() {
@@ -64,6 +74,7 @@ class MoviewDetailController : UIViewController {
         tableview.register(DetailVideoTableViewCell.self, forCellReuseIdentifier: Constant.CellIdentifiers.detailVideoCell)
         tableview.register(DetailTableViewCell.self, forCellReuseIdentifier: Constant.CellIdentifiers.detailCell)
         tableview.register(CastCrewTableViewCell.self, forCellReuseIdentifier: Constant.CellIdentifiers.castCell)
+        tableview.register(DetailRecommendationTableViewCell.self, forCellReuseIdentifier: Constant.CellIdentifiers.recommendationCell)
         
         tableview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableview.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
@@ -124,23 +135,42 @@ extension MoviewDetailController : UITableViewDelegate , UITableViewDataSource{
             cell.isCast = true
             cell.selectionStyle = .none
             return cell
+        case .recommendations:
+            let cell = tableView.dequeueReusableCell(withIdentifier: Constant.CellIdentifiers.recommendationCell, for: indexPath) as! DetailRecommendationTableViewCell
+            cell.result = recommandedResponse
+            cell.delegate = self
+            return cell
         }
     }
 }
 
 
 extension MoviewDetailController : MovieDetailControllerDelegate {
+    func handleRecomandationSuccess(response: HomeModel) {
+        self.recommandedResponse = response.results
+        
+        DispatchQueue.main.async {
+            self.reloadSectionInTable(.recommendations)
+        }
+    }
+    
     
     func handleMovieDetailFailureResponse() {
-        
+        DispatchQueue.main.async {
+            self.loader.stopAnimating()
+        }
     }
     
     func handleVideoFailureResponse() {
-        
+        DispatchQueue.main.async {
+            self.loader.stopAnimating()
+        }
     }
     
     func handleCastCrewFailureResponse() {
-        
+        DispatchQueue.main.async {
+            self.loader.stopAnimating()
+        }
     }
     
     
@@ -173,7 +203,11 @@ extension MoviewDetailController : MovieDetailControllerDelegate {
 }
 
 
-extension MoviewDetailController : MoviewDetailControllerPlayTrailorDelegate {
+extension MoviewDetailController : MoviewDetailControllerPlayTrailorDelegate , MovieDetailControllerRecommandationDelegate{
+    func openMovieDetail(movieId: Int) {
+        NavigationHelper.openMoviewDetailVC(moviewId: movieId, controller: self)
+    }
+    
     func playTrailor(id: String) {
         self.playYoutubeVideo(url: id)
     }

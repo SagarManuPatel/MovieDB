@@ -95,8 +95,6 @@ class SearchController : UIViewController {
         
         collectionView.contentInset = UIEdgeInsets.init(top: 0, left: 16, bottom: 0, right: 16)
         
-//        self.estimateWidth = Double((CGFloat(view.frame.size.width) / 2))
-        
         collectionView.topAnchor.constraint(equalTo: remoteSearchView.bottomAnchor , constant: 8).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
@@ -216,7 +214,6 @@ extension SearchController : SearchControllerDelegate {
             self.loader.stopAnimating()
         }
     }
-    
 }
 
 extension SearchController : SearchControllerRecentSearchDelegate {
