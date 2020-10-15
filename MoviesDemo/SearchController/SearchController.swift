@@ -20,6 +20,8 @@ class SearchController : UIViewController {
     
     var searchModel = [ResultModel]()
     var isWaiting : Bool = false
+    var searchedQuery : String = ""
+    var page : Int = 1
     
     lazy var recentSearchView : RecentSearchView = {
         let view = RecentSearchView()
@@ -27,6 +29,15 @@ class SearchController : UIViewController {
         view.backgroundColor = .white
         view.delegate = self
         return view
+    }()
+    
+    let loader : UIActivityIndicatorView = {
+        var l = UIActivityIndicatorView(style: .large)
+        l.color = UIColor.white
+        l.backgroundColor = UIColor(red: 231/255, green: 231/255, blue: 231/255, alpha: 1.0)
+        l.layer.cornerRadius = 10
+        l.translatesAutoresizingMaskIntoConstraints = false
+        return l
     }()
     
     lazy var remoteSearchView : SearchView = {
@@ -65,6 +76,13 @@ class SearchController : UIViewController {
         view.addSubview(remoteSearchView)
         view.addSubview(collectionView)
         view.addSubview(recentSearchView)
+        
+        view.addSubview(loader)
+        
+        loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loader.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        loader.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
         remoteSearchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
         remoteSearchView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
@@ -128,6 +146,19 @@ extension SearchController : UICollectionViewDelegate , UICollectionViewDataSour
         }
         NavigationHelper.openMoviewDetailVC(moviewId: searchModel[indexPath.item].id ?? 0, controller: self)
     }
+    
+    //MARK:- Pagination added
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            guard let `self` = self else {return}
+            if collectionView.visibleCells.contains(cell) {
+                if indexPath.item == self.searchModel.count - 1 && !self.isWaiting{
+                    self.page += 1
+                    self.fetchData()
+                }
+            }
+        }
+    }
 }
 
 
@@ -154,10 +185,15 @@ extension SearchController : UITextFieldDelegate {
             return
         }
         let trimmed = query.trimTrailingWhitespaces().addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
-        
+        self.searchedQuery = trimmed
+        self.loader.startAnimating()
         viewModel.fetchSearchResults(query: trimmed, page: 1)
         self.searchModel.removeAll()
         self.collectionView.reloadData()
+    }
+    
+    private func fetchData() {
+        viewModel.fetchSearchResults(query: searchedQuery, page: page)
     }
 }
 
@@ -171,17 +207,21 @@ extension SearchController : SearchControllerDelegate {
         
         DispatchQueue.main.async {
             self.collectionView.reloadData()
+            self.loader.stopAnimating()
         }
     }
     
     func handleFailed() {
-        
+        DispatchQueue.main.async {
+            self.loader.stopAnimating()
+        }
     }
     
 }
 
 extension SearchController : SearchControllerRecentSearchDelegate {
     func doRecentSearch(name: String) {
+        self.loader.startAnimating()
         self.remoteSearchView.searchTextField.text = name
         let trimmed = name.trimTrailingWhitespaces().addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
         hideShowRecentSearchView(isHidden: true)

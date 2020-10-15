@@ -22,9 +22,11 @@ class HomeViewModel {
         self.delegate?.apiInQueue(isWaiting: true)
         APIManager.sharedInstance.makeApiCallToFetchData(request: RequestsHelper.fetchMoviesList(page: page)) { (data , error) in
             do {
-                let response = try JSONDecoder().decode(HomeModel.self, from: data!)
-                self.delegate?.handleDataSucessfullyFetched(response: response)
-                print(response)
+                if let dataReponse = data {
+                    let response = try JSONDecoder().decode(HomeModel.self, from: dataReponse)
+                    self.delegate?.handleDataSucessfullyFetched(response: response)
+                    print(response)
+                }
             }catch let jsonError {
                 print(jsonError)
             }

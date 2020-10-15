@@ -30,6 +30,15 @@ class MoviewDetailController : UIViewController {
         return tv
     }()
     
+    let loader : UIActivityIndicatorView = {
+        var l = UIActivityIndicatorView(style: .large)
+        l.color = UIColor.white
+        l.backgroundColor = UIColor(red: 231/255, green: 231/255, blue: 231/255, alpha: 1.0)
+        l.layer.cornerRadius = 10
+        l.translatesAutoresizingMaskIntoConstraints = false
+        return l
+    }()
+    
     var moviewId : Int?
     
     override func viewDidLoad() {
@@ -37,6 +46,7 @@ class MoviewDetailController : UIViewController {
         view.backgroundColor = .white
         setupTableView()
         viewModel.delegate = self
+        self.loader.startAnimating()
         viewModel.getMovieDetail(moiveId: moviewId ?? 0)
         viewModel.getCastAndCrue(moiveId: moviewId ?? 0)
         viewModel.getTrailerVideo(moiveId: moviewId ?? 0)
@@ -44,6 +54,12 @@ class MoviewDetailController : UIViewController {
     
     private func setupTableView() {
         view.addSubview(tableview)
+        view.addSubview(loader)
+        
+        loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loader.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        loader.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
         tableview.register(DetailVideoTableViewCell.self, forCellReuseIdentifier: Constant.CellIdentifiers.detailVideoCell)
         tableview.register(DetailTableViewCell.self, forCellReuseIdentifier: Constant.CellIdentifiers.detailCell)
@@ -133,6 +149,7 @@ extension MoviewDetailController : MovieDetailControllerDelegate {
         
         DispatchQueue.main.async {
             self.navigationItem.title = self.moviewDetailModel?.original_title
+            self.loader.stopAnimating()
             self.reloadSectionInTable(.video)
             self.reloadSectionInTable(.detail)
         }

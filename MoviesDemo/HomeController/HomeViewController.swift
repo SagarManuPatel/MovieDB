@@ -29,6 +29,15 @@ class HomeViewController: UIViewController {
         return view
     }()
     
+    let loader : UIActivityIndicatorView = {
+        var l = UIActivityIndicatorView(style: .large)
+        l.color = UIColor.white
+        l.backgroundColor = UIColor(red: 231/255, green: 231/255, blue: 231/255, alpha: 1.0)
+        l.layer.cornerRadius = 10
+        l.translatesAutoresizingMaskIntoConstraints = false
+        return l
+    }()
+    
     lazy var collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -48,7 +57,7 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .white
         self.addCustomViews()
         viewModel.delegate = self
-        
+        self.navigationItem.title = "Home"
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(handleSearchTapped))
         
         self.fetchData()
@@ -59,12 +68,23 @@ class HomeViewController: UIViewController {
     }
     
     private func fetchData() {
+        if page == 1 {
+           self.loader.startAnimating()
+        }
         viewModel.fetchMoviews(page: page)
     }
     
     private func addCustomViews() {
         view.addSubview(localSearchView)
         view.addSubview(collectionView)
+        
+        view.addSubview(loader)
+        
+        loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loader.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        loader.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
         
         localSearchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
         localSearchView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
@@ -147,6 +167,7 @@ extension HomeViewController : HomeControllerDelegate {
         
         DispatchQueue.main.async {
             self.collectionView.reloadData()
+            self.loader.stopAnimating()
         }
     }
     
