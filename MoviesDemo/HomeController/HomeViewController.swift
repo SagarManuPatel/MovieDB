@@ -147,7 +147,7 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let id = resultModel[indexPath.item].id {
+        if let id = filterResultModel[indexPath.item].id {
             NavigationHelper.openMoviewDetailVC(moviewId: id, controller: self)
         }
     }
