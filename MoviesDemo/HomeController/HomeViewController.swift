@@ -2,11 +2,15 @@
 //  ViewController.swift
 //  MoviesDemo
 //
-//  Created by Sagar Patel on 12/10/20.
+//  Created by Sagar Patel on 19/12/20.
 //  Copyright © 2020 Sagar Patel. All rights reserved.
 //
 
 import UIKit
+
+protocol HomeViewControllerDelegate : class {
+    func sortMoviewById(id : String)
+}
 
 class HomeViewController: UIViewController {
     
@@ -17,7 +21,9 @@ class HomeViewController: UIViewController {
     var page : Int = 1
     var isWaiting : Bool = false
     var isSearching : Bool = false
-    
+    var sortViewHeightAnchor : NSLayoutConstraint?
+    var viewAppeard = false
+    var sortMovieBy : String = "now_playing"
     //MARK:-  Local Search added
     
     lazy var localSearchView : SearchView = {
@@ -26,6 +32,13 @@ class HomeViewController: UIViewController {
         view.layer.cornerRadius = 8
         view.searchTextField.delegate = self
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 0.5)
+        return view
+    }()
+    
+    lazy var sortView : MovieSortView = {
+        let view = MovieSortView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = self
         return view
     }()
     
@@ -62,6 +75,11 @@ class HomeViewController: UIViewController {
         
         self.fetchData()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewAppeard = true
+    }
     
     @objc func handleSearchTapped() {
         NavigationHelper.openSearchController(controller: self)
@@ -71,13 +89,13 @@ class HomeViewController: UIViewController {
         if page == 1 {
            self.loader.startAnimating()
         }
-        viewModel.fetchMoviews(page: page)
+        viewModel.fetchMoviews(page: page, sort: sortMovieBy)
     }
     
     private func addCustomViews() {
         view.addSubview(localSearchView)
+        view.addSubview(sortView)
         view.addSubview(collectionView)
-        
         view.addSubview(loader)
         
         loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -91,6 +109,13 @@ class HomeViewController: UIViewController {
         localSearchView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
         localSearchView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
+        sortView.topAnchor.constraint(equalTo: localSearchView.bottomAnchor , constant: 8).isActive = true
+        sortView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor , constant: 16).isActive = true
+        sortView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor , constant: -16).isActive = true
+        sortViewHeightAnchor = sortView.heightAnchor.constraint(equalToConstant: 50)
+            sortViewHeightAnchor?.isActive = true
+        
+        
         localSearchView.searchTextField.addTarget(self, action: #selector(handelTextDidChanged), for: .editingChanged)
         
         collectionView.register(HomeMovieCollectionCell.self, forCellWithReuseIdentifier: Constant.CellIdentifiers.homeMoviewCell)
@@ -99,7 +124,7 @@ class HomeViewController: UIViewController {
         
         self.estimateWidth = Double((CGFloat(view.frame.size.width) / 2))
         
-        collectionView.topAnchor.constraint(equalTo: localSearchView.bottomAnchor , constant: 8).isActive = true
+        collectionView.topAnchor.constraint(equalTo: sortView.bottomAnchor , constant: 8).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -185,5 +210,48 @@ extension HomeViewController : UITextFieldDelegate {
             return model.title?.range(of: textField.text ?? "", options: .caseInsensitive) != nil
         })
         self.collectionView.reloadData()
+    }
+}
+
+//MARK:- Scroll Animation
+
+extension HomeViewController {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let translation = scrollView.panGestureRecognizer.translation(in: scrollView.superview)
+        
+        if collectionView == scrollView && viewAppeard{
+            if(translation.y > 0)
+            {
+                // react to dragging down
+                if sortViewHeightAnchor?.constant != 50 {
+                    sortViewHeightAnchor?.constant = 50
+                    UIView.animate(withDuration: 0.3) {
+                        self.view.layoutIfNeeded()
+                    }
+                }
+            } else
+            {
+                // react to dragging up
+                if sortViewHeightAnchor?.constant != 0 {
+                    sortViewHeightAnchor?.constant = 0
+                    UIView.animate(withDuration: 0.3) {
+                        self.view.layoutIfNeeded()
+                    }
+                }
+            }
+        }
+    }
+}
+
+extension HomeViewController : HomeViewControllerDelegate {
+    
+    func sortMoviewById(id: String) {
+        self.resultModel.removeAll()
+        self.filterResultModel.removeAll()
+        self.collectionView.reloadData()
+        self.page = 1
+        self.sortMovieBy = id
+        self.fetchData()
     }
 }

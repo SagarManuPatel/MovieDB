@@ -2,7 +2,7 @@
 //  RequestHelper.swift
 //  MoviesDemo
 //
-//  Created by Sagar Patel on 12/10/20.
+//  Created by Sagar Patel on 20/12/20.
 //  Copyright © 2020 Sagar Patel. All rights reserved.
 //
 
@@ -16,8 +16,8 @@ class RequestsHelper: NSObject {
         request.httpMethod = type
     }
     
-    class func fetchMoviesList(page : Int) -> NSMutableURLRequest {
-        let movieList = URL(string: "\(Constant.URL.baseURL)movie/now_playing?page=\(page)")
+    class func fetchMoviesList(page : Int , sort : String) -> NSMutableURLRequest {
+        let movieList = URL(string: "\(Constant.URL.baseURL)movie/\(sort)?page=\(page)")
         var movieRequest = NSMutableURLRequest(url: movieList! as URL)
         addRequestProperties(&movieRequest, ofType: Constant.RequestMethodTypes.GET)
         return movieRequest

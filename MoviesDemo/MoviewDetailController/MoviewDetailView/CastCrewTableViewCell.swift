@@ -2,7 +2,7 @@
 //  CastTableViewCell.swift
 //  MoviesDemo
 //
-//  Created by Sagar Patel on 14/10/20.
+//  Created by Sagar Patel on 20/12/20.
 //  Copyright © 2020 Sagar Patel. All rights reserved.
 //
 

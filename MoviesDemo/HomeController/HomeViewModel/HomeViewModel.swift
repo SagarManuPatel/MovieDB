@@ -2,7 +2,7 @@
 //  HomeViewModel.swift
 //  MoviesDemo
 //
-//  Created by Sagar Patel on 12/10/20.
+//  Created by Sagar Patel on 19/12/20.
 //  Copyright © 2020 Sagar Patel. All rights reserved.
 //
 
@@ -18,13 +18,13 @@ class HomeViewModel {
     
     weak var delegate : HomeControllerDelegate?
     
-    func fetchMoviews(page : Int) {
+    func fetchMoviews(page : Int , sort : String) {
         self.delegate?.apiInQueue(isWaiting: true)
-        APIManager.sharedInstance.makeApiCallToFetchData(request: RequestsHelper.fetchMoviesList(page: page)) { (data , error) in
+        APIManager.sharedInstance.makeApiCallToFetchData(request: RequestsHelper.fetchMoviesList(page: page, sort: sort)) { [weak self] (data , error) in
             do {
                 if let dataReponse = data {
                     let response = try JSONDecoder().decode(HomeModel.self, from: dataReponse)
-                    self.delegate?.handleDataSucessfullyFetched(response: response)
+                    self?.delegate?.handleDataSucessfullyFetched(response: response)
                     print(response)
                 }
             }catch let jsonError {
