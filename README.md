@@ -10,6 +10,8 @@ ImageLoader -> Haven’t used Dependency for Loading Image.
 
 HomeController -> fetch Movie from API , Also Added Pagination , Search will work Locally on the data came from API , While Serchig Pagination will not Work,Onces Serach textfield isEmpty than Pagination Will Work.
 
+-> User can Sort Moview By Now Playing , Top reated , Latest , populer , upcoing.
+
 DetailController -> Made Multiple API Calls to get Data like Image , Trailor , Cast , Crew , Recommandations
 - First Section will have Trailor of the Movie , on Click it will lunch Video Player , Used "XCDYouTubeKit" for this.
 - Second Section will have Detail about Movie like Duration , Genre , Short Detail.
